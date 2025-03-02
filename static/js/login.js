@@ -26,13 +26,14 @@ async function registro() {
     const username = document.getElementById("nombreUsuario2").value;
     const password = document.getElementById("contrasenia2").value;
     const email = document.getElementById("email2").value;
+    const nombre = document.getElementById("nombreCliente2").value;
     try {
         const response = await fetch("http://localhost:8080/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password, email })
+            body: JSON.stringify({ username, password, email,nombre })
         });
 
         if (!response.ok) {
