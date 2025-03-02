@@ -27,8 +27,40 @@ cerrarSesion.addEventListener("click", () =>  cerrarSesionF());
 (async function iniciarApp() {
     extraccionToken(); 
     await obtenerMisReservas();
+    mostrarMisReservas();
     //await obtenerMesas();
 })();
+//Pintar las reservas existentes del cliente logeado
+function mostrarMisReservas(){
+    let tbody = document.getElementById("tbodyReservas");
+    misReservas.forEach(reserva => {
+        let tr = document.createElement("tr");
+        tr.className = "odd:bg-amber-600 even:bg-amber-400";
+        let id = document.createElement("td");
+        id.className = "border px-4 py-2";
+        let fecha = document.createElement("td");
+        fecha.className = "border px-4 py-2";
+        let hora = document.createElement("td");
+        hora.className = "border px-4 py-2";
+        let comensales = document.createElement("td");
+        comensales.className = "border px-4 py-2";
+        let mesa = document.createElement("td");
+        mesa.className = "border px-4 py-2";
+        let operaciones = document.createElement("td");
+        operaciones.className = "border px-4 py-2";
+        id.textContent = reserva.id;
+        fecha.textContent = reserva.fechaReserva;
+        hora.textContent = reserva.horaReserva;
+        comensales.textContent = reserva.numeroPersonas;
+        mesa.textContent = reserva.mesa.numeroMesa;
+        tr.appendChild(id);
+        tr.appendChild(fecha);
+        tr.appendChild(hora);
+        tr.appendChild(comensales);
+        tr.appendChild(mesa);
+        tbody.appendChild(tr);
+    });
+}
 // Obtener reservas
 async function obtenerMisReservas() {
     try {
@@ -45,9 +77,9 @@ async function obtenerMisReservas() {
         }
         if (!response.ok) throw new Error("Error al obtener las reservas");
         reservas = await response.json();
-        console.log(reservas)
-        misReservas = reservas.filter(reserva => reserva.cliente.id = idCliente);
-        //console.log(misReservas)
+        misReservas = reservas.filter(reserva => reserva.cliente.id == idCliente);
+        console.log("Mis reservas");
+        console.log(misReservas)
     } catch (error) {
         console.error("Error:", error);
     }
