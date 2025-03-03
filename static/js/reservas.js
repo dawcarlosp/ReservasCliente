@@ -36,6 +36,7 @@ function mostrarMisReservas(){
     misReservas.forEach(reserva => {
         let tr = document.createElement("tr");
         tr.className = "odd:bg-amber-600 even:bg-amber-400";
+        tr.id = reserva.id;
         let id = document.createElement("td");
         id.className = "border px-4 py-2";
         let fecha = document.createElement("td");
@@ -48,16 +49,19 @@ function mostrarMisReservas(){
         mesa.className = "border px-4 py-2";
         let operaciones = document.createElement("td");
         operaciones.className = "border px-4 py-2";
+        //Contenido
         id.textContent = reserva.id;
         fecha.textContent = reserva.fechaReserva;
         hora.textContent = reserva.horaReserva;
         comensales.textContent = reserva.numeroPersonas;
         mesa.textContent = reserva.mesa.numeroMesa;
+        operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
         tr.appendChild(id);
         tr.appendChild(fecha);
         tr.appendChild(hora);
         tr.appendChild(comensales);
         tr.appendChild(mesa);
+        tr.appendChild(operaciones);
         tbody.appendChild(tr);
     });
 }
@@ -84,3 +88,18 @@ async function obtenerMisReservas() {
         console.error("Error:", error);
     }
 }
+//funcion para borrar la reserva
+async function borrarReserva(id, elemento){
+try {
+    const response = await fetch(`http://${ip}:${puerto}/reservas/${id}`,{method: 'DELETE', headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+    }});
+    if(!response.ok)
+    {
+        throw new Error("Error al borrar el proyecto")
+    }
+    elemento.parentNode.parentNode.remove();
+}catch (error){
+    console.error("Error:", error);
+}}
