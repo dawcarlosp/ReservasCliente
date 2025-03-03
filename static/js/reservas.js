@@ -254,3 +254,27 @@ function inyeccionboton(){
     //boton.addEventListener("click", reservar);
     dialogo.appendChild(boton);
 }
+
+
+//Pijeria para que el dialogo se pueda mover
+let isDragging = false;
+let offsetX, offsetY;
+dialogo.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - dialogo.offsetLeft;
+    offsetY = e.clientY - dialogo.offsetTop;
+    dialogo.style.cursor = "grabbing";
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+        dialogo.style.left = `${e.clientX - offsetX}px`;
+        dialogo.style.top = `${e.clientY - offsetY}px`;
+        dialogo.style.position = "absolute"; // Para moverlo
+    }
+});
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+    dialogo.style.cursor = "default";
+});
