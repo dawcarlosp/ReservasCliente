@@ -235,9 +235,22 @@ function pintarInputNumerico(){
         let label = document.createElement("label");
         label.id = "labelNumero";
         label.textContent = "Vamos a ser(comensales): ";
-        cuadro.appendChild(label);
-        cuadro.appendChild(input);
+        dialogo.appendChild(label);
+        dialogo.appendChild(input);
 
-        //input.addEventListener("change", inyeccionboton);
+        input.addEventListener("change", inyeccionboton);
     }
+}
+//boton de reserva;
+function inyeccionboton(){
+    //Asignar el valor
+    numeroPersonas = document.getElementById("inputNumero").value;
+    let boton = document.getElementById("boton");
+    if(boton) boton.remove();
+    boton = document.createElement("button");
+    boton.id = "boton";
+    boton.className ="border rounded-xl mt-3 hover:bg-black hover:text-amber-600 p-1 cursor-pointer hover:scale-110";
+    boton.textContent = "Reservar";
+    //boton.addEventListener("click", reservar);
+    dialogo.appendChild(boton);
 }

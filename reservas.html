@@ -34,7 +34,8 @@
         </table>
     </div>
     <!--Dialogo reserva-->
-    <dialog action="" class="border mt-10 p-10 rounded-xl" id="dialogoReservaNueva">
+    <dialog action="" class="border mt-10 rounded-xl" id="dialogoReservaNueva">
+        <button class="border hover:bg-black hover:text-amber-600 p-1 rounded-xl cursor-pointer hover:scale-110 self-end" id="cerrarDialogoReserva">✖︎</button>
         <h1 class="font-bold text-3xl">Nueva reserva</h1>
         <label for="fechaReserva" class="font-bold">Fecha reserva</label>
         <input type="date" id="fechaReserva" class="border">
@@ -49,8 +50,6 @@
             <option value="20:00">20:00</option>
             <option value="21:00">21:00</option>
         </select>
-
-        <button class="border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoReserva">Cerrar ventana</button>
     </dialog>
 </body>
 </html>
