@@ -71,6 +71,39 @@ function mostrarMisReservas(){
         tbody.appendChild(tr);
     });
 }
+//Pintar nueva reserva;
+function mostrarReservaInsertada(reserva){
+    let tbody = document.getElementById("tbodyReservas");
+        let tr = document.createElement("tr");
+        tr.className = "odd:bg-amber-600 even:bg-amber-400";
+        tr.id = reserva.id;
+        let id = document.createElement("td");
+        id.className = "border px-4 py-2";
+        let fecha = document.createElement("td");
+        fecha.className = "border px-4 py-2";
+        let hora = document.createElement("td");
+        hora.className = "border px-4 py-2";
+        let comensales = document.createElement("td");
+        comensales.className = "border px-4 py-2";
+        let mesa = document.createElement("td");
+        mesa.className = "border px-4 py-2";
+        let operaciones = document.createElement("td");
+        operaciones.className = "border px-4 py-2";
+        //Contenido
+        id.textContent = reserva.id;
+        fecha.textContent = reserva.fechaReserva;
+        hora.textContent = reserva.horaReserva;
+        comensales.textContent = reserva.numeroPersonas;
+        mesa.textContent = reserva.mesa.numeroMesa;
+        operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
+        tr.appendChild(id);
+        tr.appendChild(fecha);
+        tr.appendChild(hora);
+        tr.appendChild(comensales);
+        tr.appendChild(mesa);
+        tr.appendChild(operaciones);
+        tbody.appendChild(tr);
+}
 // Obtener reservas
 async function obtenerMisReservas() {
     try {
@@ -270,6 +303,7 @@ async function reservar(){
         //Capturo la respuesta para coger el id
         const reservaInsertada = await response.json();
         console.log(reservaInsertada);
+        mostrarReservaInsertada(reservaInsertada);
 }catch (error){
     console.error(error.message);
 }
@@ -296,4 +330,4 @@ document.addEventListener("mousemove", (e) => {
 document.addEventListener("mouseup", () => {
     isDragging = false;
     dialogo.style.cursor = "default";
-});
+});1
