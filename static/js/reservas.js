@@ -186,7 +186,7 @@ function changeFechaHora() {
 
                 div.className = "mesa rounded-3xl bg-amber-700 text-black border-5 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
                 
-                idMesa = mesa.numeroMesa;
+                idMesa = mesa.id;
                 pintarInputNumerico();
             });
 
@@ -245,6 +245,7 @@ function inyeccionboton(){
 //Reservar 
 async function reservar(){
     idCliente = parseInt(idCliente);
+    numeroPersonas = parseFloat(numeroPersonas);
     const reserva= {idMesa, idCliente, fechaReserva, horaReserva, numeroPersonas};
     console.log("Reserva")
     console.log(reserva);
@@ -261,14 +262,16 @@ async function reservar(){
             })
         if(!response.ok)
         {
-            throw new Error("Error al insertar el proyecto")
+            //throw new Error("Error al insertar el proyecto");
+            const errorData = await response.json(); // Obtener detalles del error del backend
+            console.error("Error del servidor:", errorData);
+            throw new Error(errorData.mensaje || "Error al insertar la reserva"); // Muestra el mensaje real
         }
         //Capturo la respuesta para coger el id
         const reservaInsertada = await response.json();
         console.log(reservaInsertada);
-        window.location.href = "success.html";
 }catch (error){
-    console.error(error);
+    console.error(error.message);
 }
 }
 
