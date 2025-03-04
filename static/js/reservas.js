@@ -6,6 +6,8 @@ let idCliente;
 let idMesa;
 let reservas;
 let mesas;
+let horaReserva;
+let fechaReserva;
 //Verifica si hay token o no 
 if (!token) {
     location.href = "index.html";
@@ -21,27 +23,7 @@ function extraccionToken(){
 }
 //Cerrar sesion
 let cerrarSesion = document.getElementById("cerrarSesion");
-function cerrarSesionF(){// Obtener mesas
-    async function obtenerMesas() {
-        try {
-            const response = await fetch(`http://${ip}:8080/mesas`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
-            if (response.status === 401) {
-                throw new Error("Token expirado. Por favor, inicie sesión nuevamente.");
-            }
-            if (!response.ok) throw new Error("Error al obtener las mesas");
-    
-            mesas = await response.json();
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    }
-    
+function cerrarSesionF(){
     localStorage.removeItem("token");
     location.href = "index.html";
 }
@@ -165,8 +147,6 @@ function cerrarDialogoReserva(){
     dialogo.close();
 }
 //fecha y hora
-let fechaReserva;
-let horaReserva;
 let fechaReservaInput = document.getElementById("fechaReserva");
 let horaReservaInput = document.getElementById("horaReserva");
 //Cuando se programo el back, la fecha se designo con el formato d-m-y
@@ -185,40 +165,46 @@ function fechaReservaF(valor){
     }
 }
 //Traer reservas
-function changeFechaHora(){
-    //reservas de una fecha y hora concreta
+function changeFechaHora() {
     let resevasDiaHora = reservas.filter(reserva => reserva.horaReserva == horaReserva && reserva.fechaReserva == fechaReserva);
-    //ids de las mesas que estan ocupadas en una fecha y hora concretas
     let mesasOcupadas = resevasDiaHora.map(reserva => reserva.mesa.id);
-    //Dibujamos las mesas
+    
     let mesasUI = document.querySelectorAll(".mesa");
+
     if (mesasUI.length === 0) {
-        // Si las mesas aún no han sido creadas, créalas una sola vez
         mesas.forEach(mesa => {
             let div = document.createElement("div");
             div.textContent = "Mesa " + mesa.numeroMesa;
             div.className = "mesa rounded-3xl bg-black text-amber-600 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
-            
-            div.dataset.id = mesa.id; // Para identificar cada mesa
+            div.dataset.id = mesa.id; 
+
             div.addEventListener("click", () => {
-                alert(`Has seleccionado la mesa ${mesa.numeroMesa}`);
+                // Resetear todas las mesas antes de aplicar el nuevo estilo
+                document.querySelectorAll(".mesa").forEach(m => {
+                    m.className = "mesa rounded-3xl bg-black text-amber-600 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
+                });
+
+                div.className = "mesa rounded-3xl bg-amber-700 text-black border-5 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
+                
                 idMesa = mesa.numeroMesa;
                 pintarInputNumerico();
             });
 
             dialogo.appendChild(div);
         });
-    } 
-    // Solo cambiar visibilidad de las mesas en lugar de recrearlas
+    }
+
+    // Resetear visibilidad de todas las mesas
     document.querySelectorAll(".mesa").forEach(mesa => {
         let idMesa = parseInt(mesa.dataset.id);
         if (mesasOcupadas.includes(idMesa)) {
-            mesa.style.display = "none"; // Ocultar si está ocupada
+            mesa.style.display = "none"; 
         } else {
-            mesa.style.display = "flex"; // Mostrar si está disponible
+            mesa.style.display = "flex"; // Asegurar que se muestre si ya no está ocupada
         }
     });
 }
+
 //Input de los comensales
 function pintarInputNumerico(){
     let input = document.getElementById("inputNumero");
@@ -251,12 +237,42 @@ function inyeccionboton(){
     boton.id = "boton";
     boton.className ="border rounded-xl mt-3 hover:bg-black hover:text-amber-600 p-1 cursor-pointer hover:scale-110";
     boton.textContent = "Reservar";
-    //boton.addEventListener("click", reservar);
+    boton.addEventListener("click", reservar);
     dialogo.appendChild(boton);
 }
 
+//funcion para hacer el post de la reserva
+//Reservar 
+async function reservar(){
+    idCliente = parseInt(idCliente);
+    const reserva= {idMesa, idCliente, fechaReserva, horaReserva, numeroPersonas};
+    console.log("Reserva")
+    console.log(reserva);
 
-//Pijeria para que el dialogo se pueda mover
+    try{
+        const response = await fetch(`http://${ip}:${puerto}/reservas`,
+            {
+                method: 'POST',
+                headers:{
+                    "Authorization": `Bearer ${token}`,
+                    'content-Type':'application/json'
+                },
+                body: JSON.stringify(reserva)
+            })
+        if(!response.ok)
+        {
+            throw new Error("Error al insertar el proyecto")
+        }
+        //Capturo la respuesta para coger el id
+        const reservaInsertada = await response.json();
+        console.log(reservaInsertada);
+        window.location.href = "success.html";
+}catch (error){
+    console.error(error);
+}
+}
+
+//Pijeria para que el dialogo se pueda mover, le podría interesar para ver sus reservas
 let isDragging = false;
 let offsetX, offsetY;
 dialogo.addEventListener("mousedown", (e) => {
