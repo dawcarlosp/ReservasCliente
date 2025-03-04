@@ -203,6 +203,9 @@ function changeFechaHora() {
     let mesasOcupadas = resevasDiaHora.map(reserva => reserva.mesa.id);
     
     let mesasUI = document.querySelectorAll(".mesa");
+    if (mesasOcupadas.length > 0 && mesasOcupadas.length === mesas.length) {
+        alert("Todas las mesas están ocupadas para esta fecha y esta hora, por favor pruebe con otra.");
+    }
 
     if (mesasUI.length === 0) {
         mesas.forEach(mesa => {
@@ -297,6 +300,7 @@ async function reservar(){
         {
             //throw new Error("Error al insertar el proyecto");
             const errorData = await response.json(); // Obtener detalles del error del backend
+            alert(errorData.message);
             console.error("Error del servidor:", errorData);
             throw new Error(errorData.mensaje || "Error al insertar la reserva"); // Muestra el mensaje real
         }
