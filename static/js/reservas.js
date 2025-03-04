@@ -18,7 +18,6 @@ function extraccionToken(){
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(window.atob(base64));
-    console.log(decodedToken)
     idCliente = decodedToken.sub;
 }
 //Cerrar sesion
@@ -281,7 +280,7 @@ function inyeccionboton(){
 //Reservar 
 async function reservar(){
     idCliente = parseInt(idCliente);
-    numeroPersonas = parseFloat(numeroPersonas);
+    numeroPersonas = parseInt(numeroPersonas);
     const reserva= {idMesa, idCliente, fechaReserva, horaReserva, numeroPersonas};
     console.log("Reserva")
     console.log(reserva);

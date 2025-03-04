@@ -11,7 +11,8 @@ async function login() {
         });
 
         if (!response.ok) {
-            alert("Usuario e passwords incorrectos");
+            //alert("Usuario e passwords incorrectos");
+            mostrarMensajeError();
             throw new Error("Error en la autenticación");
         }
 
@@ -21,6 +22,17 @@ async function login() {
     } catch (error) {
         console.error("Error:", error);
     }
+}
+let dialogoError = document.getElementById("dialogoError");
+let botondialogoError = document.getElementById("cerrarDialogoError");
+botondialogoError.addEventListener("click", cerrarMensajeError );
+function cerrarMensajeError(){
+    dialogoError.className =  "";
+    dialogoError.close();
+}
+function mostrarMensajeError(){
+    dialogoError.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoError.showModal();
 }
 async function registro() {
     const username = document.getElementById("nombreUsuario2").value;
