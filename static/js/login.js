@@ -35,20 +35,26 @@ function mostrarMensajeError(){
     dialogoError.showModal();
 }
 async function registro() {
-    const username = document.getElementById("nombreUsuario2").value;
-    const password = document.getElementById("contrasenia2").value;
-    const email = document.getElementById("email2").value;
-    const nombre = document.getElementById("nombreCliente2").value;
+    let username = document.getElementById("nombreUsuario2").value;
+    let password = document.getElementById("contrasenia2").value;
+    let email = document.getElementById("email2").value;
+    let nombre = document.getElementById("nombreCliente2").value;
     try {
         const response = await fetch("http://localhost:8080/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password, email,nombre })
+            body: JSON.stringify({ username, password, email,nombre })       
         });
-
+        document.getElementById("nombreUsuario2").value="";
+        document.getElementById("contrasenia2").value="";
+        document.getElementById("email2").value="";
+        document.getElementById("nombreCliente2").value="";
         if (!response.ok) {
+            const errorData = await response.json(); // Obtener detalles del error del backend
+            alert(errorData.message);
+            console.error("Error del servidor:", errorData);    
             alert("No se ha podido registrar");
             throw new Error("Error en la autenticación");
         }else{

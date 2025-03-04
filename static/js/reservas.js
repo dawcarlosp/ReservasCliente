@@ -297,7 +297,6 @@ async function reservar(){
             })
         if(!response.ok)
         {
-            //throw new Error("Error al insertar el proyecto");
             const errorData = await response.json(); // Obtener detalles del error del backend
             alert(errorData.message);
             console.error("Error del servidor:", errorData);
