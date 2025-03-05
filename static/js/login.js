@@ -23,6 +23,7 @@ async function login() {
         console.error("Error:", error);
     }
 }
+//Dialogo de error de login
 let dialogoError = document.getElementById("dialogoError");
 let botondialogoError = document.getElementById("cerrarDialogoError");
 botondialogoError.addEventListener("click", cerrarMensajeError );
@@ -33,6 +34,18 @@ function cerrarMensajeError(){
 function mostrarMensajeError(){
     dialogoError.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
     dialogoError.showModal();
+}
+//Dialogo de exito de nuevo usuario
+let dialogoExitoLogin = document.getElementById("dialogoExitoLogin");
+let botondialogoExitoLogin = document.getElementById("cerrarDialogoExito");
+botondialogoExitoLogin.addEventListener("click", cerrarMensajeExitoLogin);
+function cerrarMensajeExitoLogin(){
+    dialogoExitoLogin.className =  "";
+    dialogoExitoLogin.close();
+}
+function mostrarMensajeExito(){
+    dialogoExitoLogin.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoExitoLogin.showModal();
 }
 async function registro() {
     let username = document.getElementById("nombreUsuario2").value;
@@ -67,7 +80,7 @@ async function registro() {
            }
             throw new Error("Error en la autenticación");
         }else{
-            alert("Te has registrado correctamente");
+            mostrarMensajeExito();
         }
     } catch (error) {
         console.error("Error:", error);
