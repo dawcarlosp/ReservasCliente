@@ -18,7 +18,6 @@ function extraccionToken(){
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(window.atob(base64));
-    console.log(decodedToken);
     idCliente = decodedToken.sub;
 }
 //Cerrar sesion
@@ -34,7 +33,6 @@ cerrarSesion.addEventListener("click", () =>  cerrarSesionF());
     await obtenerMisReservas();
     await obtenerMesas();
     mostrarMisReservas();
-    //await obtenerMesas();
 })();
 //Pintar las reservas existentes del cliente logeado
 function mostrarMisReservas(){
@@ -121,10 +119,6 @@ async function obtenerMisReservas() {
         if (!response.ok) throw new Error("Error al obtener las reservas");
         reservas = await response.json();
         misReservas = reservas.filter(reserva => reserva.cliente.id == idCliente);
-        console.log("Reservas");
-        console.log(reservas)
-        console.log("Mis reservas");
-        console.log(misReservas)
     } catch (error) {
         console.error("Error:", error);
     }
@@ -285,8 +279,6 @@ async function reservar(){
     idCliente = parseInt(idCliente);
     numeroPersonas = parseInt(numeroPersonas);
     const reserva= {idMesa, idCliente, fechaReserva, horaReserva, numeroPersonas};
-    console.log("Reserva")
-    console.log(reserva);
 
     try{
         const response = await fetch(`http://${ip}:${puerto}/reservas`,
@@ -301,16 +293,14 @@ async function reservar(){
         if(!response.ok)
         {
             const errorData = await response.json(); // Obtener detalles del error del backend
-            alert(errorData.message);
             console.error("Error del servidor:", errorData);
             throw new Error(errorData.mensaje || "Error al insertar la reserva"); // Muestra el mensaje real
         }
         //Capturo la respuesta para coger el id
         const reservaInsertada = await response.json();
-        console.log(reservaInsertada);
         mostrarReservaInsertada(reservaInsertada);
 }catch (error){
-    console.error(error.message);
+    console.error(error);
 }
 }
 

@@ -53,9 +53,17 @@ async function registro() {
         document.getElementById("nombreCliente2").value="";
         if (!response.ok) {
             const errorData = await response.json(); // Obtener detalles del error del backend
-            console.error("Error del servidor:", errorData);    
            if(errorData.nombre){
             document.getElementById("spanNombre").textContent = errorData.nombre;
+           }
+           if(errorData.email){
+            document.getElementById("spanEmail").textContent = errorData.email;
+           }
+           if(errorData.username){
+            document.getElementById("spanNombreUsuario").textContent = errorData.username;
+           }
+           if(errorData.password){
+            document.getElementById("spanContrasenia").textContent = errorData.password;
            }
             throw new Error("Error en la autenticación");
         }else{
@@ -72,6 +80,11 @@ function mostrarDialogoRegistro(){
 }
 function cerrarDialogoRegistro(){
     let dialogo =  document.getElementById("dialogoRegistro");
+        document.getElementById("spanNombre").textContent = "";
+        document.getElementById("spanEmail").textContent = "";
+        document.getElementById("spanNombreUsuario").textContent = "";
+        document.getElementById("spanContrasenia").textContent = "";
+
     dialogo.className =  "";
     dialogo.close();
 }
