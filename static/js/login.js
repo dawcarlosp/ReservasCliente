@@ -53,9 +53,10 @@ async function registro() {
         document.getElementById("nombreCliente2").value="";
         if (!response.ok) {
             const errorData = await response.json(); // Obtener detalles del error del backend
-            alert(errorData.message);
             console.error("Error del servidor:", errorData);    
-            alert("No se ha podido registrar");
+           if(errorData.nombre){
+            document.getElementById("spanNombre").textContent = errorData.nombre;
+           }
             throw new Error("Error en la autenticación");
         }else{
             alert("Te has registrado correctamente");

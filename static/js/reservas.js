@@ -18,6 +18,7 @@ function extraccionToken(){
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(window.atob(base64));
+    console.log(decodedToken);
     idCliente = decodedToken.sub;
 }
 //Cerrar sesion
@@ -120,6 +121,8 @@ async function obtenerMisReservas() {
         if (!response.ok) throw new Error("Error al obtener las reservas");
         reservas = await response.json();
         misReservas = reservas.filter(reserva => reserva.cliente.id == idCliente);
+        console.log("Reservas");
+        console.log(reservas)
         console.log("Mis reservas");
         console.log(misReservas)
     } catch (error) {
@@ -157,7 +160,7 @@ try {
     }});
     if(!response.ok)
     {
-        throw new Error("Error al borrar el proyecto")
+        throw new Error("Error al borrar la reserva")
     }
     elemento.parentNode.parentNode.remove();
 }catch (error){
