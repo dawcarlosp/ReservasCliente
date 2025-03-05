@@ -19,6 +19,8 @@ function extraccionToken(){
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(window.atob(base64));
     idCliente = decodedToken.sub;
+    console.log(decodedToken)
+    document.getElementById("bienvenida").textContent = "¡Bienvenido " + decodedToken.username + "!";
 }
 //Cerrar sesion
 let cerrarSesion = document.getElementById("cerrarSesion");
@@ -29,7 +31,7 @@ function cerrarSesionF(){
 cerrarSesion.addEventListener("click", () =>  cerrarSesionF());
 // Cargar datos iniciales
 (async function iniciarApp() {
-    extraccionToken(); 
+    extraccionToken();
     await obtenerMisReservas();
     await obtenerMesas();
     mostrarMisReservas();
