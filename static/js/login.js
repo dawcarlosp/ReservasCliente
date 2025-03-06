@@ -34,7 +34,7 @@ function cerrarMensajeError(){
     dialogoError.close();
 }
 function mostrarMensajeError(){
-    dialogoError.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoError.className =  "border mt-10 p-10 rounded-xl bg-indigo-500 text-zinc-900 flex flex-col items-center justify-center font-mono self-center justify-self-center";
     dialogoError.showModal();
 }
 //Dialogo de exito de nuevo usuario
@@ -46,7 +46,7 @@ function cerrarMensajeExitoLogin(){
     dialogoExitoLogin.close();
 }
 function mostrarMensajeExito(){
-    dialogoExitoLogin.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoExitoLogin.className =  "border mt-10 p-10 rounded-xl bg-zinc-900 text-white flex flex-col items-center justify-center font-mono justify-self-center self-center";
     dialogoExitoLogin.showModal();
 }
 async function registro() {
@@ -90,7 +90,7 @@ async function registro() {
 }
 function mostrarDialogoRegistro(){
     let dialogo =  document.getElementById("dialogoRegistro");
-    dialogo.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogo.className =  "border mt-10 p-10 rounded-xl bg-zinc-800 text-white flex flex-col items-center justify-center font-sans justify-self-center self-center";
     dialogo.showModal();
 }
 function cerrarDialogoRegistro(){

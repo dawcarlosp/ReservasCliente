@@ -10,7 +10,7 @@
 
     <title>Página principal</title>
 </head>
-<body class="bg-amber-600 flex flex-col items-center justify-center font-mono">
+<body class="bg-zinc-900 flex flex-col items-center justify-center font-sans text-white">
     <!--Formulario de login-->
     <div modal class="border flex flex-col items-center justify-center mt-10 p-10 rounded-xl" id="formulario">
         <h1 class="font-bold text-3xl">Gestión restaurante</h1>
@@ -18,10 +18,10 @@
         <input type="text" id="nombreUsuario" name="nombreUsuario" class="border">
         <label for="contrasenia" class="font-bold">Contraseña:</label>
         <input type="password" id="contrasenia" name="contrasenia" class="border">
-        <button class="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" id="iniciarSesion">Iniciar sesión</button>
+        <button class="border my-5 hover:bg-black hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110" id="iniciarSesion">Iniciar sesión</button>
         <div class="flex items-center justify-center">
-            <p>¿No tienes cuenta?</p>
-            <button class="border hover:bg-black hover:text-amber-600 p-1 rounded-xl cursor-pointer hover:scale-110" id="mostrarDialogoRegistro">Regístrate</button>
+            <p class="text-indigo-500 me-5">¿No tienes cuenta?</p>
+            <button class="border hover:text-indigo-500 p-1 rounded-xl cursor-pointer hover:scale-110" id="mostrarDialogoRegistro">Regístrate</button>
         </div>
     </div>
     <!--Dialogo de registro-->
@@ -40,20 +40,20 @@
         <label for="contrasenia" class="font-bold">Contraseña:</label>
         <input type="password" id="contrasenia2" name="contrasenia2" class="border">
         <span id="spanContrasenia"></span>
-        <button class="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" id="registrarse">Registrarse</button>
-        <button class="border hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoRegistro">Cerrar ventana</button>
+        <button class="border my-5 hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110" id="registrarse">Registrarse</button>
+        <button class="border hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoRegistro">Cerrar ventana</button>
     </dialog>
         <!--Dialogo de error-->
         <dialog action="" class="border mt-10 p-10 rounded-xl" id="dialogoError">
             <p class="">Usuario o passwords incorrectos</p>
             <img src="static/imgs/cena.jpg" alt="" class="rounded-3xl w-10">
-            <button class="border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoError">Entendido</button>
+            <button class="border hover:bg-zinc-900 hover:text-indigo-500 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoError">Entendido</button>
         </dialog>
              <!--Dialogo de exito login-->
              <dialog action="" class="border mt-10 p-10 rounded-xl" id="dialogoExitoLogin">
                 <p class="">Te has registrado correctamente, ya puedes iniciar sesión y disfrutar de la aplicación</p>
                 <img src="static/imgs/1200px-Asadito.jpg" alt="" class="rounded-3xl w-100">
-                <button class="border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoExito">Estupendo!</button>
+                <button class="border hover:bg-zinc-900 hover:text-indigo-500 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110" id="cerrarDialogoExito">Estupendo!</button>
             </dialog>
 </body>
 </html>

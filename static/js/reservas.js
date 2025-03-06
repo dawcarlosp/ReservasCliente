@@ -19,7 +19,6 @@ function extraccionToken(){
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(window.atob(base64));
     idCliente = decodedToken.sub;
-    console.log(decodedToken)
     document.getElementById("bienvenida").textContent = "¡Bienvenido " + decodedToken.username + "!";
 }
 //Cerrar sesion
@@ -43,8 +42,6 @@ function mostrarMisReservas(){
         let tr = document.createElement("tr");
         tr.className = "odd:bg-amber-600 even:bg-amber-400";
         tr.id = reserva.id;
-        let id = document.createElement("td");
-        id.className = "border px-4 py-2";
         let fecha = document.createElement("td");
         fecha.className = "border px-4 py-2";
         let hora = document.createElement("td");
@@ -56,13 +53,12 @@ function mostrarMisReservas(){
         let operaciones = document.createElement("td");
         operaciones.className = "border px-4 py-2";
         //Contenido
-        id.textContent = reserva.id;
+
         fecha.textContent = reserva.fechaReserva;
         hora.textContent = reserva.horaReserva;
         comensales.textContent = reserva.numeroPersonas;
         mesa.textContent = reserva.mesa.numeroMesa;
         operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
-        tr.appendChild(id);
         tr.appendChild(fecha);
         tr.appendChild(hora);
         tr.appendChild(comensales);
@@ -77,8 +73,6 @@ function mostrarReservaInsertada(reserva){
         let tr = document.createElement("tr");
         tr.className = "odd:bg-amber-600 even:bg-amber-400";
         tr.id = reserva.id;
-        let id = document.createElement("td");
-        id.className = "border px-4 py-2";
         let fecha = document.createElement("td");
         fecha.className = "border px-4 py-2";
         let hora = document.createElement("td");
@@ -90,13 +84,11 @@ function mostrarReservaInsertada(reserva){
         let operaciones = document.createElement("td");
         operaciones.className = "border px-4 py-2";
         //Contenido
-        id.textContent = reserva.id;
         fecha.textContent = reserva.fechaReserva;
         hora.textContent = reserva.horaReserva;
         comensales.textContent = reserva.numeroPersonas;
         mesa.textContent = reserva.mesa.numeroMesa;
         operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
-        tr.appendChild(id);
         tr.appendChild(fecha);
         tr.appendChild(hora);
         tr.appendChild(comensales);
@@ -175,6 +167,7 @@ function mostrarDialogoReserva(){
 //Cerrar ventana de nueva reserva
 function cerrarDialogoReserva(){
     dialogo.className =  "";
+    document.getElementById("spanFechaReserva").textContent = "";
     dialogo.close();
 }
 //fecha y hora
@@ -190,6 +183,18 @@ function horaReservaF(valor){
     }
 }
 function fechaReservaF(valor){
+    let fechaIngresada = new Date(); 
+    fechaIngresada.setDate(valor.split("-")[0]);
+    fechaIngresada.setMonth(valor.split("-")[1]-1);
+    fechaIngresada.setFullYear(valor.split("-")[2]);
+    const hoy = new Date();
+    const manana = new Date(hoy);
+    manana.setDate(hoy.getDate() + 1);
+    if (fechaIngresada < manana) {
+        document.getElementById("spanFechaReserva").textContent = "Solo hacemos reservas con un día de antelación con el objetivo de ofrecerle el mejor servicio";
+    }else{
+        document.getElementById("spanFechaReserva").textContent = "";
+    }
     fechaReserva = valor;
     if(horaReserva && fechaReserva){
     changeFechaHora();
@@ -327,7 +332,7 @@ async function reservar(){
 }
 //Mensaje de reserva insertada
 let dialogoExitoR = document.getElementById("dialogoExitoReserva");
-botondialogoExito.addEventListener("click", cerrarMensajeExito);
+
 function cerrarMensajeExito(){
     dialogoExitoR.className =  "";
     dialogoExitoR.close();
