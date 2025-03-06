@@ -1,8 +1,10 @@
+const ip = "192.168.21.159";
+const puerto = "8080";
 async function login() {
     const username = document.getElementById("nombreUsuario").value;
     const password = document.getElementById("contrasenia").value;
     try {
-        const response = await fetch("http://localhost:8080/auth/login", {
+        const response = await fetch(`http://${ip}:${puerto}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -53,7 +55,7 @@ async function registro() {
     let email = document.getElementById("email2").value;
     let nombre = document.getElementById("nombreCliente2").value;
     try {
-        const response = await fetch("http://localhost:8080/auth/register", {
+        const response = await fetch(`http://${ip}:${puerto}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -1,5 +1,5 @@
 const token = localStorage.getItem("token");
-const ip = "localhost";
+const ip = "192.168.21.159";
 const puerto = "8080";
 let misReservas = [];
 let idCliente;
@@ -301,10 +301,41 @@ async function reservar(){
         //Capturo la respuesta para coger el id
         const reservaInsertada = await response.json();
         mostrarReservaInsertada(reservaInsertada);
+        mostrarMensajeExito(reservaInsertada);
+        //Apaño sucio para eliminar los inputs inyectamos mediante js para que el usuario no le pueda dar al boton otra ves
+        document.getElementById("boton").remove();
+        document.getElementById("inputNumero").remove();
+        document.getElementById("labelNumero").remove();
+        document.querySelectorAll(".mesa").forEach(mesa => mesa.remove());
+        //Limpiar los valores de los dos inputs que siempre estan presente
+        document.getElementById("fechaReserva").value = "";
+        document.getElementById("horaReserva").value = "";
 }catch (error){
     console.error(error);
 }
 }
+//Mensaje de reserva insertada
+let dialogoExitoR = document.getElementById("dialogoExitoReserva");
+botondialogoExito.addEventListener("click", cerrarMensajeExito);
+function cerrarMensajeExito(){
+    dialogoExitoR.className =  "";
+    dialogoExitoR.close();
+}
+function mostrarMensajeExito(reserva){
+    dialogoExitoR.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoExitoR.innerHTML = "";
+    let b = document.createElement("b");
+    let button = document.createElement("button");
+    button.textContent = "Estupendo!";
+    button.id = "cerrarDialogoExitoR";
+    button.className = "border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110";
+    button.addEventListener("click", cerrarMensajeExito);
+    b.textContent = `¡Enhorabuena! Tienes una nueva reserva, el dia ${reserva.fechaReserva}, a las ${reserva.horaReserva} para ${reserva.numeroPersonas} personas`;
+    dialogoExitoR.appendChild(b);
+    dialogoExitoR.appendChild(button);
+    dialogoExitoR.showModal();
+}
+
 
 //Pijeria para que el dialogo se pueda mover, le podría interesar para ver sus reservas
 let isDragging = false;
