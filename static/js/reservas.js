@@ -295,6 +295,17 @@ async function reservar(){
         if(!response.ok)
         {
             const errorData = await response.json(); // Obtener detalles del error del backend
+            if(errorData[0].field){
+             document.getElementById("spanFechaReserva").textContent = errorData[0].message;
+              //Apaño sucio para eliminar los inputs inyectamos mediante js para que el usuario no le pueda dar al boton otra ves
+        document.getElementById("boton").remove();
+        document.getElementById("inputNumero").remove();
+        document.getElementById("labelNumero").remove();
+        document.querySelectorAll(".mesa").forEach(mesa => mesa.remove());
+        //Limpiar los valores de los dos inputs que siempre estan presente
+        document.getElementById("fechaReserva").value = "";
+        document.getElementById("horaReserva").value = "";
+            }
             console.error("Error del servidor:", errorData);
             throw new Error(errorData.mensaje || "Error al insertar la reserva"); // Muestra el mensaje real
         }
