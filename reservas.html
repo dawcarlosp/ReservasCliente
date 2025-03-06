@@ -12,18 +12,21 @@
     <title>Reservas</title>
 </head>
 
-<body class="bg-amber-600 flex flex-col items-center justify-center font-mono">
+<body class="bg-zinc-900 text-white flex flex-col items-center justify-center font-mono">
     <div class="self-end me-1">
-        <button class="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110 "
+        <button class="border my-5 hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110 "
             id="botonDialogoReserva">Reserva nueva</button>
-        <button class="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110 "
+        <button class="border my-5 hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110 "
             id="cerrarSesion">Cerrar Sesión</button>
     </div>
-    <h2 id="bienvenida"></h2>
+    <div class="flex items-center gap-1">
+        <h2 id="bienvenida"></h2>
+        <img src="static/imgs/perroAdorable.webp" alt="" class="border-indigo-500 border-4 rounded-full w-15">
+    </div>
     <h1 class="font-bold text-3xl">Mis reservas</h1>
     <div class="overflow-x-auto w-full max-w-4xl">
         <table class="table-auto w-full border-collapse shadow-lg rounded-lg overflow-hidden">
-            <thead class="bg-amber-700 text-white">
+            <thead class="bg-indigo-500 text-white">
                 <tr>
                     <th class="border px-4 py-2">FECHA DE LA RESERVA</th>
                     <th class="border px-4 py-2">HORA DE LA RESERVA</th>
@@ -37,17 +40,20 @@
             </tbody>
         </table>
     </div>
+    <div id="mensajeVacio">
+
+    </div>
     <!--Dialogo reserva-->
     <dialog action="" class="border mt-10 rounded-xl" id="dialogoReservaNueva">
         <button
-            class="border hover:bg-black hover:text-amber-600 p-1 rounded-xl cursor-pointer hover:scale-110 self-end"
+            class="border hover:text-indigo-500 p-1 rounded-xl cursor-pointer hover:scale-110 self-end"
             id="cerrarDialogoReserva">✖︎</button>
         <h1 class="font-bold text-3xl">Nueva reserva</h1>
         <label for="fechaReserva" class="font-bold">Fecha reserva</label>
         <span id="spanFechaReserva"></span>
         <input type="date" id="fechaReserva" class="border">
         <label for="horaReserva" class="font-bold">Hora reserva</label>
-        <select name="horaReserva" id="horaReserva" class="border">
+        <select name="horaReserva" id="horaReserva" class="border bg-zinc-900 text-white">
             <option value="14:00">14:00</option>
             <option value="15:00">15:00</option>
             <option value="16:00">16:00</option>
@@ -58,9 +64,9 @@
             <option value="21:00">21:00</option>
         </select>
     </dialog>
-    <!--Dialogo de exito login-->
+    <!--Dialogo de exito Reserva-->
     <dialog action="" class="border mt-10 p-10 rounded-xl" id="dialogoExitoReserva">
-        <button class="border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110"
+        <button class="border hover:text-indigo-500 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110"
             id="cerrarDialogoExitoR">Estupendo!</button>
     </dialog>
 </body>

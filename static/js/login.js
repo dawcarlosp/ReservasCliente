@@ -1,4 +1,4 @@
-const ip = "192.168.21.159";
+const ip = "localhost";
 const puerto = "8080";
 async function login() {
     const username = document.getElementById("nombreUsuario").value;
@@ -108,3 +108,11 @@ document.getElementById("iniciarSesion").addEventListener("click", login);
 document.getElementById("registrarse").addEventListener("click", registro );
 document.getElementById("mostrarDialogoRegistro").addEventListener("click", mostrarDialogoRegistro );
 document.getElementById("cerrarDialogoRegistro").addEventListener("click", cerrarDialogoRegistro );
+//Alert para imagenes sin funcionalidad
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("img").forEach(img => {
+        img.addEventListener("click", () => {
+            alert("Lo sentimos, la función de asignar foto aún no existe, estamos trabajando en ello");
+        });
+    });
+});

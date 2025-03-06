@@ -1,5 +1,5 @@
 const token = localStorage.getItem("token");
-const ip = "192.168.21.159";
+const ip = "localhost";
 const puerto = "8080";
 let misReservas = [];
 let idCliente;
@@ -8,6 +8,7 @@ let reservas;
 let mesas;
 let horaReserva;
 let fechaReserva;
+
 //Verifica si hay token o no 
 if (!token) {
     location.href = "index.html";
@@ -38,9 +39,16 @@ cerrarSesion.addEventListener("click", () =>  cerrarSesionF());
 //Pintar las reservas existentes del cliente logeado
 function mostrarMisReservas(){
     let tbody = document.getElementById("tbodyReservas");
+    if(misReservas.length == 0){
+        let p = document.createElement("p");
+        p.textContent = "No tienes ninguna reserva aun";
+        document.getElementById("mensajeVacio").appendChild(p);
+    }else{
+        document.getElementById("mensajeVacio").innerHTML="";
+    }
     misReservas.forEach(reserva => {
         let tr = document.createElement("tr");
-        tr.className = "odd:bg-amber-600 even:bg-amber-400";
+        tr.className = "odd:bg-zinc-900 even:bg-zinc-800";
         tr.id = reserva.id;
         let fecha = document.createElement("td");
         fecha.className = "border px-4 py-2";
@@ -58,7 +66,7 @@ function mostrarMisReservas(){
         hora.textContent = reserva.horaReserva;
         comensales.textContent = reserva.numeroPersonas;
         mesa.textContent = reserva.mesa.numeroMesa;
-        operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
+        operaciones.innerHTML = `<button class ="border my-5 hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
         tr.appendChild(fecha);
         tr.appendChild(hora);
         tr.appendChild(comensales);
@@ -71,7 +79,7 @@ function mostrarMisReservas(){
 function mostrarReservaInsertada(reserva){
     let tbody = document.getElementById("tbodyReservas");
         let tr = document.createElement("tr");
-        tr.className = "odd:bg-amber-600 even:bg-amber-400";
+        tr.className = "odd:bg-zinc-900 even:bg-zinc-800";
         tr.id = reserva.id;
         let fecha = document.createElement("td");
         fecha.className = "border px-4 py-2";
@@ -88,13 +96,14 @@ function mostrarReservaInsertada(reserva){
         hora.textContent = reserva.horaReserva;
         comensales.textContent = reserva.numeroPersonas;
         mesa.textContent = reserva.mesa.numeroMesa;
-        operaciones.innerHTML = `<button class ="border my-5 hover:bg-black hover:text-amber-600 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
+        operaciones.innerHTML = `<button class ="border my-5 hover:text-indigo-500 p-2 rounded-xl cursor-pointer hover:scale-110" onclick="borrarReserva(${reserva.id},this)">Borrar</button>`;
         tr.appendChild(fecha);
         tr.appendChild(hora);
         tr.appendChild(comensales);
         tr.appendChild(mesa);
         tr.appendChild(operaciones);
         tbody.appendChild(tr);
+        document.getElementById("mensajeVacio").innerHTML="";
 }
 // Obtener reservas
 async function obtenerMisReservas() {
@@ -150,7 +159,17 @@ try {
     {
         throw new Error("Error al borrar la reserva")
     }
+    const index = misReservas.findIndex(reserva => reserva.id === id);
+            if (index !== -1) {
+                misReservas.splice(index, 1); // Eliminar del array
+            }
     elemento.parentNode.parentNode.remove();
+    if(misReservas.length == 0){
+        document.getElementById("mensajeVacio").innerHTML="";
+        let p = document.createElement("p");
+        p.textContent = "No tienes ninguna reserva aun";
+        document.getElementById("mensajeVacio").appendChild(p);
+    }
 }catch (error){
     console.error("Error:", error);
 }}}
@@ -161,7 +180,7 @@ let botonCerrarDialogo = document.getElementById("cerrarDialogoReserva");
 botonCerrarDialogo.addEventListener("click",cerrarDialogoReserva);
 botonReservaNueva.addEventListener("click", mostrarDialogoReserva );
 function mostrarDialogoReserva(){
-    dialogo.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogo.className =  "border mt-10 p-10 rounded-xl bg-zinc-900 text-white flex flex-col items-center justify-center font-mono justify-self-center";
     dialogo.showModal();
 }
 //Cerrar ventana de nueva reserva
@@ -214,16 +233,16 @@ function changeFechaHora() {
         mesas.forEach(mesa => {
             let div = document.createElement("div");
             div.textContent = "Mesa " + mesa.numeroMesa;
-            div.className = "mesa rounded-3xl bg-black text-amber-600 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
+            div.className = "mesa rounded-3xl bg-zinc-800 text-indigo-500 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
             div.dataset.id = mesa.id; 
 
             div.addEventListener("click", () => {
                 // Resetear todas las mesas antes de aplicar el nuevo estilo
                 document.querySelectorAll(".mesa").forEach(m => {
-                    m.className = "mesa rounded-3xl bg-black text-amber-600 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
+                    m.className = "mesa rounded-3xl bg-zinc-800 text-indigo-500 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
                 });
 
-                div.className = "mesa rounded-3xl bg-amber-700 text-black border-5 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
+                div.className = "mesa rounded-3xl bg-indigo-500 text-zinc-900 border-5 w-20 h-20 flex justify-center items-center hover:scale-110 my-1 cursor-pointer";
                 
                 idMesa = mesa.id;
                 pintarInputNumerico();
@@ -274,7 +293,7 @@ function inyeccionboton(){
     if(boton) boton.remove();
     boton = document.createElement("button");
     boton.id = "boton";
-    boton.className ="border rounded-xl mt-3 hover:bg-black hover:text-amber-600 p-1 cursor-pointer hover:scale-110";
+    boton.className ="border rounded-xl mt-3 hover:text-indigo-500 p-1 cursor-pointer hover:scale-110";
     boton.textContent = "Reservar";
     boton.addEventListener("click", reservar);
     dialogo.appendChild(boton);
@@ -310,6 +329,7 @@ async function reservar(){
         //Limpiar los valores de los dos inputs que siempre estan presente
         document.getElementById("fechaReserva").value = "";
         document.getElementById("horaReserva").value = "";
+        document.getElementById("mensajeVacio").innerHTML="";
             }
             console.error("Error del servidor:", errorData);
             throw new Error(errorData.mensaje || "Error al insertar la reserva"); // Muestra el mensaje real
@@ -338,13 +358,13 @@ function cerrarMensajeExito(){
     dialogoExitoR.close();
 }
 function mostrarMensajeExito(reserva){
-    dialogoExitoR.className =  "border mt-10 p-10 rounded-xl bg-amber-600 flex flex-col items-center justify-center font-mono justify-self-center";
+    dialogoExitoR.className =  "border mt-10 p-10 rounded-xl bg-zinc-900 text-white flex flex-col items-center justify-center font-mono justify-self-center";
     dialogoExitoR.innerHTML = "";
     let b = document.createElement("b");
     let button = document.createElement("button");
     button.textContent = "Estupendo!";
     button.id = "cerrarDialogoExitoR";
-    button.className = "border hover:bg-black hover:text-amber-600 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110";
+    button.className = "border hover:text-indigo-500 p-2 mt-2 rounded-xl cursor-pointer hover:scale-110";
     button.addEventListener("click", cerrarMensajeExito);
     b.textContent = `¡Enhorabuena! Tienes una nueva reserva, el dia ${reserva.fechaReserva}, a las ${reserva.horaReserva} para ${reserva.numeroPersonas} personas`;
     dialogoExitoR.appendChild(b);
@@ -353,7 +373,10 @@ function mostrarMensajeExito(reserva){
 }
 
 
+
+
 //Pijeria para que el dialogo se pueda mover, le podría interesar para ver sus reservas
+/*
 let isDragging = false;
 let offsetX, offsetY;
 dialogo.addEventListener("mousedown", (e) => {
@@ -374,4 +397,5 @@ document.addEventListener("mousemove", (e) => {
 document.addEventListener("mouseup", () => {
     isDragging = false;
     dialogo.style.cursor = "default";
-});1
+});*/
+
