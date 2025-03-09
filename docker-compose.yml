@@ -1,0 +1,8 @@
+  # Servicio para el frontend
+  frontend:
+    build:
+      context: ./frontend  # Directorio donde está tu Dockerfile del frontend
+    ports:
+      - "80:80"  # Puerto donde estará accesible el frontend
+    depends_on:
+      - backend
